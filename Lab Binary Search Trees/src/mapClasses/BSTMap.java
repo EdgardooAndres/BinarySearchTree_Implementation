@@ -11,7 +11,7 @@ import interfaces.Map;
 public class BSTMap<K, V> implements Map<K, V> {
 	// the binary search tree supporting this implementation of the map
 	private LinkedBST<Entry<K, V>> tree;   	
-	
+
 	/**
 	 * Creates an instance of BSTMap. 
 	 * @param cmp the comparator of keys that is received and which shall
@@ -31,7 +31,7 @@ public class BSTMap<K, V> implements Map<K, V> {
 	public BSTMap(Comparator<K> cmp) { 
 		tree = new LinkedBST<>(new EntryComparator<K, V>(cmp)); 
 	}
-	
+
 	@Override
 	/**
 	 * the size of the map is the size of the tree. 
@@ -85,44 +85,47 @@ public class BSTMap<K, V> implements Map<K, V> {
 		// invoking operations from the BSTLinkedBinaryTree, applying 
 		// them to instance field tree.... EXERCISE 1
 		//...TODO
-		
+
 		Position<Entry<K, V>> result = tree.getPosition(new MapEntry<>(key, value));
-		
+
 		if (result != null)
 			return result.getElement().getValue().setValue(value);
-
+		Comparator cmp
 		Position<Entry<K, V>> nuevo = new Position<Entry<K, V>>(new MapEntry<>(key, value));
 		if(tree.root() == null)
-			tree.root() = nuevo;
+			tree.addRoot(nuevo.getElement());
 		else
 		{
 			Position<Entry<K, V>> curr = tree.root();
 			boolean inserted = false;
 			while(!inserted)
 			{
-				int c = tree.getPosition(e);
+				int c = tree.getPosition(curr.getElement();
 				if(c<0)
-					if(curr.getLeft == null)
+					if(tree.left(curr)== null)
 					{
-						curr.setLeft(nuevo);
+						Position<Entry<K, V>> left =
+						tree.getPosition(curr.getElement());//.setLeft(nuevo);
+						
 						inserted = true;
 					}
 					else
 					{
-						curr = curr.getLeft();
+						curr = tree.left(curr);
 					}
-			}
-			else
-			{
-				if(curr.getRight() == null)
-				{
-					curr.setRight(nuevo);
-					inserted = true;
-				}
 				else
-					curr = curr.getRight();
+				{
+					if(tree.right(curr)== null)
+					{
+						curr.setRight(nuevo);
+						inserted = true;
+					}
+					else
+						curr = tree.right(curr);
+				}
 			}
-			nuevo.setParent(current)
+
+			tree.getPosition(nuevo.getElement()).;//nuevo.setParent(curr)
 		}
 		tree.size()++;
 		return null;    // for the moment...
@@ -138,9 +141,9 @@ public class BSTMap<K, V> implements Map<K, V> {
 		// invoking operations from the BSTLinkedBinaryTree, applying 
 		// them to instance field tree.... EXERCISE 1
 		//...TODO
-		
-		
-		
+
+
+
 		return null;    // for the moment...
 	}
 
@@ -152,13 +155,13 @@ public class BSTMap<K, V> implements Map<K, V> {
 		// them to instance field tree.... In this case you will need another
 		// inner class......   EXERCISE 2
 		//...TODO
-		
+
 		ArrayList<K> keys = new ArrayList<>(); 
 
 		for (Position<Entry<K, V>> p : tree.positions())
 			keys.add(p.getElement().getKey());
-		
-		
+
+
 		return null;    // for the moment...
 	}
 
@@ -170,12 +173,12 @@ public class BSTMap<K, V> implements Map<K, V> {
 		// them to instance field tree.... In this case you will need another
 		// inner class......  EXERCISE 2
 		//...TODO
-		
+
 		ArrayList<V> vals = new ArrayList<>(); 
 
 		for (Position<Entry<K, V>> p : tree.positions())
 			vals.add(p.getElement().getValue()); 
-		
+
 		return vals;    // for the moment...
 	}
 
@@ -193,7 +196,7 @@ public class BSTMap<K, V> implements Map<K, V> {
 		this.tree.display();
 	}
 
-	
+
 	/**
 	 * The following class is an implementation of a Comparator that is to be
 	 * used to compare entries. it is based on a comparator of keys. The 
@@ -218,7 +221,7 @@ public class BSTMap<K, V> implements Map<K, V> {
 			return keyComparator.compare(e1.getKey(), e2.getKey()); 
 		}
 	}
-	
+
 	/**
 	 * Class for an implementation of Entry<K, V> 
 	 * @author pedroirivera-vega
@@ -229,12 +232,12 @@ public class BSTMap<K, V> implements Map<K, V> {
 	private static class MapEntry<K, V> implements Entry<K, V> {
 		private K key; 
 		private V value; 
-		
+
 		public MapEntry(K key, V value) { 
 			this.key = key; 
 			this.value = value; 
 		}
-		
+
 		@Override
 		public K getKey() {
 			return key;
@@ -244,16 +247,16 @@ public class BSTMap<K, V> implements Map<K, V> {
 		public V getValue() {
 			return value;
 		} 
-		
+
 		public V setValue(V value) { 
 			V old = this.value; 
 			this.value = value; 
 			return old; 
 		}
-		
+
 		public String toString() { 
 			return "[" + key + ", " + value +"]"; 
 		}
 	}
-	
+
 }
